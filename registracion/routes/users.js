@@ -3,6 +3,8 @@ var router = express.Router();
 var usersControllers = require('../controllers/usersControllers.js')
 var multer = require('multer');
 var path = require('path');
+let {check, validationResult, body} = require('express-validator');
+let credUserMiddlewares = require('../middlewares/credUserMiddlewares')
 
 var storage = multer.diskStorage({
 	destination:(req,file,cb)=>{
@@ -15,17 +17,31 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage:storage});
 
-/* GET users listing. */
-router.get('/register', usersControllers.register);
+/* --- REGISTER --- */
+
+router.get('/register', credUserMiddlewares.guest, usersControllers.register);
 
 router.post('/register', upload.any(), usersControllers.create);
 
 /* --- LOGIN ---*/
-router.get('/login', usersControllers.login);
+router.get('/login', credUserMiddlewares.guest, usersControllers.login);
 
-router.post('login', usersControllers.processLogin);
+router.post('/login', [
+	check('email').isEmail().withMessage('E-mail inválido'),
+	check('password').isLength({min:6}).withMessage('La contrañseña debe tener mas de 6 caractéres')
+  
+  ], usersControllers.processLogin);
 
-router.get('/list', usersControllers.list);
+  /* --- RUTA DE PRUEBA PARA CHEQUEAR SESSION ---*/
+router.get('/check', function(req, res){
+	if(req.session.userLogged == undefined){
+		res.send('no estás logueado')
+	} else {
+		res.send('el usuario logueado es: '+ req.session.userLogged.email);
+	}
+})
+
+router.get('/perfil', credUserMiddlewares.auth, usersControllers.perfil);
 
 
 module.exports = router;

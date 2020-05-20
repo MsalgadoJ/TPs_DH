@@ -4,6 +4,6 @@ var mainController = require("../controllers/mainController.js");
 
 router.get('/', mainController.main);
 router.get('/creditos', mainController.credit);
-router.get('*', mainController.error);
+//router.get('*', mainController.error);
 
 module.exports = router;

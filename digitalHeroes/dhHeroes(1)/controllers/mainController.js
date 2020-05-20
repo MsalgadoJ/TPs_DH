@@ -8,7 +8,7 @@ var mainController = {
     },
 
     error: function(req, res){
-        res.send("'404 not found. <br> ¡Houston, poseemos problemas!")
+        res.status(404).send("'404 not found. <br> ¡Houston, poseemos problemas!")
     }
 }
 
