@@ -1,0 +1,19 @@
+// 1- Primero hacemos: npm install sequelize -cli -g
+// 2. npm install sequelize
+// 3- npm install mysql2
+// 4- se crea el archivo .sequelizerc y se copia el código de abajo
+
+const path = require('path')
+
+module.exports = {
+    config: path.resolve('./database/config', 'config.js'),
+    'models-path': path.resolve('./database/models'),
+    'migrations-path': path.resolve('./database/migrations'),
+    'seeders-path': path.resolve('./database/seeders'),
+}
+
+// 5- finalmente, sequelize init
+
+*** PARTE 2 ***
+// 6- Moficiar config
+// 7- hacemos los modelos

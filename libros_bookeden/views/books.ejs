@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Listado de <%= title %></h1>
+
+    <% for( let i = 0; i < books.length; i++ ) { %>
+        <li>
+            <a href="/books/detail/<%= books[i].id %>"><%= books[i].title %> </a>
+            
+        </li>
+    <% } %>
+
+
+
+  </body>
+</html>

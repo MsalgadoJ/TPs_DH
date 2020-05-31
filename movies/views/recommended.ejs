@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Listado de <%= title %></h1>
+    <% for( let i = 0; i < peliculas.length; i++ ) { %>
+        <li>
+            <a href="/movies/detail/<%= peliculas[i].id %>"><%= peliculas[i].title %></a>: 
+            <%= peliculas[i].rating %> 
+        </li>
+    <% } %>
+  </body>
+</html>

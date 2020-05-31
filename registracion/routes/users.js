@@ -21,12 +21,12 @@ var upload = multer({storage:storage});
 
 router.get('/register', credUserMiddlewares.guest, usersControllers.register);
 
-router.post('/register', upload.any(), usersControllers.create);
+router.post('/perfil', upload.any(), usersControllers.create);
 
 /* --- LOGIN ---*/
 router.get('/login', credUserMiddlewares.guest, usersControllers.login);
 
-router.post('/login', [
+router.post('/perfil', [
 	check('email').isEmail().withMessage('E-mail inválido'),
 	check('password').isLength({min:6}).withMessage('La contrañseña debe tener mas de 6 caractéres')
   
@@ -34,6 +34,7 @@ router.post('/login', [
 
   /* --- RUTA DE PRUEBA PARA CHEQUEAR SESSION ---*/
 router.get('/check', function(req, res){
+	//console.
 	if(req.session.userLogged == undefined){
 		res.send('no estás logueado')
 	} else {

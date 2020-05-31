@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %> un libro</h1>
+
+    <form action="/books/create" method="POST">
+        <div>
+            <label for="">Titulo</label>
+            <input type="text" name="title" id="">
+        </div>
+        <div>
+            <label for="">Autor</label>
+            <input type="text" name="author" id="">
+        </div>
+        <div>
+            <label for="">Precio</label>
+            <input type="text" name="price" id="">
+        </div>
+        <div>
+          <label for="">Género</label>
+          <select name="genre" id="">
+              <% for( let i = 0; i < genres.length; i++ ) { %>
+                  <option value="<%= genres[i].id %> ">
+                  <%= genres[i].name %> 
+                  </option>
+              <% } %>
+              
+          </select>
+      </div>
+        <div>
+            <label for="">Descripción</label>
+            <input type="text" name="description" id="">
+        </div>
+        <div>
+            <label for="">Fecha de Lanzamiento</label>
+            <input type="text" name="release_date" id="">
+        </div>
+
+        <button type="submit">Crear</button>
+    </form>
+
+  </body>
+</html>

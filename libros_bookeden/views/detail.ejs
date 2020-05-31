@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= book.title %></h1>
+
+
+    <li>Autor: <%= book.author %></li>
+    <li>Genero: <%= book.genre.name %> </li>
+    <li>Precio: <%= book.price %></li>
+    <li>Fecha de publicación: <%= book.release_date %></li>
+    <li>Descripción: <%= book.description %></li>
+
+   
+    
+    <a href="/books/edit/<%= book.id %> "><button type="submit">Modificar</button></a>  
+
+    <form action="/books/delete/<%= book.id %>" method="POST">
+        <button type="submit">Borrar</button>
+    </form>
+
+
+  </body>
+</html>

@@ -47,7 +47,7 @@ var usersControllers = {
             req.session.userLogged = user;
             console.log(req.session.userLogged)
 
-            res.redirect('/users/perfil',{
+            res.render('perfil',{
                 nombre: req.session.userLogged.nombre,
                 avatar: req.session.userLogged.avatar
             });
