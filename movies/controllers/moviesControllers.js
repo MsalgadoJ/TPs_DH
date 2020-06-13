@@ -1,5 +1,6 @@
 const db = require('../database/models');
 const sequelize = db.sequelize;
+let {check, validationResult, body} = require('express-validator');
 
 const moviesControllers = {
 
@@ -7,22 +8,37 @@ const moviesControllers = {
         db.Genero.findAll()
         .then(function(generos){
             return res.render('create', {
-                generos:generos
+                generos:generos,
+                title: 'Crear'
             });
-        });  
+        }); 
+        
     },
 
     guardar: function(req,res){
-        db.Pelicula.create({
-            title: req.body.titulo,
-            awards: req.body.premios,
-            release_date: req.body.release_date,
-            genre_id: req.body.genero,
-            length: req.body.length,
-            rating: req.body.rating
-        })
 
-        res.redirect('/movies');
+        let errors = validationResult(req);
+        if(errors.isEmpty()){
+            db.Pelicula.create({
+                title: req.body.titulo,
+                awards: req.body.premios,
+                release_date: req.body.release_date,
+                genre_id: req.body.genero,
+                length: req.body.length,
+                rating: req.body.rating
+            })
+        
+            res.redirect('/movies');
+       
+        } else{
+            db.Genero.findAll().then(function(generos){
+                return res.render('create', {
+                    generos:generos,
+                    errors: errors.errors,
+                    title: 'Crear'
+                })
+            })
+        }    
     },
 
     list: function (req, res, next){
@@ -64,20 +80,39 @@ const moviesControllers = {
     },
 
     update: function(req,res,next){
-        db.Pelicula.update({
-            title: req.body.titulo,
-            awards: req.body.premios,
-            release_date: req.body.release_date,
-            genre_id: req.body.genero,
-            length: req.body.length,
-            rating: req.body.rating
-        }, {
-            where: {
-                id: req.params.id
-            }
-        });
+        
+        let errors = validationResult(req);
+        if(errors.isEmpty()){
+            db.Pelicula.update({
+                title: req.body.titulo,
+                awards: req.body.premios,
+                release_date: req.body.release_date,
+                genre_id: req.body.genero,
+                length: req.body.length,
+                rating: req.body.rating
+            }, {
+                where: {
+                    id: req.params.id
+                }
+            });
+    
+            res.redirect('/movies/detail/'+req.params.id);
+        } else {
+            let movieRequest = db.Pelicula.findByPk(req.params.id);
 
-        res.redirect('/movies/detail/'+req.params.id);
+            let genresRequest = db.Genero.findAll();
+    
+            Promise.all([movieRequest, genresRequest])
+    
+            .then(function([pelicula, generos]){
+                res.render('edit', {
+                    pelicula: pelicula,
+                    generos: generos,
+                    errors: errors.errors,
+                })
+            })
+        }
+
     },
 
     delete: function(req, res){

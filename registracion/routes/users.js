@@ -21,7 +21,7 @@ var upload = multer({storage:storage});
 
 router.get('/register', credUserMiddlewares.guest, usersControllers.register);
 
-router.post('/perfil', upload.any(), usersControllers.create);
+router.post('/register', upload.any(), usersControllers.create);
 
 /* --- LOGIN ---*/
 router.get('/login', credUserMiddlewares.guest, usersControllers.login);
@@ -42,7 +42,7 @@ router.get('/check', function(req, res){
 	}
 })
 
-router.get('/perfil', credUserMiddlewares.auth, usersControllers.perfil);
+router.get('/profile', credUserMiddlewares.auth, usersControllers.perfil);
 
 
 module.exports = router;

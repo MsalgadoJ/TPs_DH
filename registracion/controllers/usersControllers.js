@@ -19,6 +19,8 @@ var usersControllers = {
                 validacion: bcrypt.hashSync(req.body.validacion, 10),
                 avatar: req.files[0].filename
             }
+            console.log("Aquí está el usuario!!!")
+            console.log(user)
 
             // --- guardar el usuario --- //
 
@@ -49,6 +51,7 @@ var usersControllers = {
 
             res.render('perfil',{
                 nombre: req.session.userLogged.nombre,
+                email: req.session.userLogged.email,
                 avatar: req.session.userLogged.avatar
             });
 
@@ -105,11 +108,12 @@ var usersControllers = {
 
                 //creando la cookie para la casilla "recuérdame"
                 if(req.body.rememberMe != undefined){
-                    res.cookie('rememberMe', userToLogin.email, {maxAge: 60000})
+                    res.cookie('rememberMe', userToLogin.email, {maxAge: 240000})
                 }
                 console.log(req.session.userLogged)
                 res.render('perfil',{
                     nombre: req.session.userLogged.nombre,
+                    email: req.session.userLogged.email,
                     avatar: req.session.userLogged.avatar
                 });
 
