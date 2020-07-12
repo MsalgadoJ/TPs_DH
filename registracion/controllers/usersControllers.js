@@ -5,7 +5,17 @@ let {check, validationResult, body} = require('express-validator');
 var usersControllers = {
 
         register: function(req, res){
-            res.render('register');
+
+            if(typeof req.cookies.bgColor != 'undefined'){
+                res.render('register',{
+                    color: req.cookies.bgColor
+                });
+            } else {
+                res.render('register',{
+                    color: undefined
+                })
+            }
+            
         },
 
         create: function(req, res, next){
@@ -130,6 +140,26 @@ var usersControllers = {
             res.render('perfil',{
                 nombre: req.session.userLogged.nombre,
                 avatar: req.session.userLogged.avatar
+            })
+        },
+
+        mostrarColores: function(req, res, next){
+            res.render('color')
+        },
+
+        colorElegido: function(req, res, next){
+            let color = req.body.color
+            console.log(color)
+            res.cookie('bgColor', color)
+            console.log('aquí debería estar la cookie')
+            console.log(req.cookies.bgColor)
+            if(req.body.colorPreferido != undefined){
+                res.cookie('colorPreferido', color)
+            }
+
+            console.log(req.cookies.colorPreferido+ ' aquí esta la coookieeeeeeee') 
+            res.render('nuevoColor', {
+                color: color,
             })
         }
 };

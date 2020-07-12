@@ -45,4 +45,10 @@ router.get('/check', function(req, res){
 router.get('/profile', credUserMiddlewares.auth, usersControllers.perfil);
 
 
+  /* --- RUTA DE PRUEBA ELEGIR COLOR ---*/
+
+  router.get('/color', usersControllers.mostrarColores)
+  router.post('/color', usersControllers.colorElegido)
+
+
 module.exports = router;

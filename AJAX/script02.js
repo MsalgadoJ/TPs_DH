@@ -6,11 +6,10 @@ window.onload = function(){
         return response.json()
     })
     .then(function(information){
-        //console.log(information)
 
         /* --- PARA QUE EL USUARIO DECIDAD CUÁNTOS GIFS QUIERE VER --- */
         
-        let cantidadGifs = prompt('Ingresa')
+        let cantidadGifs = prompt('Ingresa cuánto GIFs deseas ver :)')
         
         /* --- RECORREMOS EL ARRAY --- */
         for(let i = 0; i < cantidadGifs; i++){

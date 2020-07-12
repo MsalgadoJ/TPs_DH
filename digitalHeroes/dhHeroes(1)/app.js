@@ -18,3 +18,11 @@ var heroesRouter = require('./routes/heroes');
 
 app.use('/', mainRouter);
 app.use('/heroes', heroesRouter);
+
+app.use(function(req, res, next){
+    res.status(404);
+    // respond with html page
+    res.send('Houston, tenemos un problema');
+
+  });
+  

@@ -19,8 +19,30 @@ if(confirmacion){
         let hobbies = hobbiesUsuario.split(',')
         console.log(hobbies)
 
-        if
+        let gustos = hobbies.indexOf('Programar','Programación', 'Programacion')
 
+        let cambiarFondo = document.querySelector('.container.background-img');
+        console.log(cambiarFondo);
+
+        if(gustos != -1){
+            window.alert('qué bueno que te guste la programación! :)')
+
+            cambiarFondo.style.backgroundImage = "url(img/programmer.jpeg)"
+
+        } else {
+            window.alert('qué lástima que no te guste la programacón :(');
+            
+            cambiarFondo.style.backgroundImage = "url(img/gatito.jpeg)"
+        }
+
+        
+        let mostrarHobbies = document.querySelector('article ol')
+        console.log(mostrarHobbies)
+        for(let i = 0; i<hobbies.length; i++){
+            mostrarHobbies.innerHTML += '<li>'+ hobbies[i]+ '</li>'
+        }
+        
+        
 
     } else {
         let containerGeneral = document.querySelector(".container-general")

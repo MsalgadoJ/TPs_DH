@@ -1,0 +1,41 @@
+<%- include('header') -%> 
+
+<h1>Nueva Actuación</h1>
+
+<% if (typeof errors != 'undefined') { %>
+    <p style="color:red">¡ERROR!</p>
+     <ul>
+         <% for( let i = 0; i < errors.length; i++ ) { %>
+         <li>
+             <%= errors[i].msg %> 
+         </li>
+         <% } %>
+     </ul>
+   <% } %>
+
+<form action="/movies/crear" method="POST">
+    <div>
+        <label for="">Película</label>
+        <select name="peliculas" id="">
+            <% for( let i = 0; i < peliculas.length; i++ ) { %>
+                <option value="<%= peliculas[i].id %> ">
+                <%= peliculas[i].title %> 
+                </option>
+            <% } %>
+            
+        </select>
+    </div>
+    <div>
+        <label for="">Actores</label>
+        <select name="actores" id="">
+            <% for( let i = 0; i < actores.length; i++ ) { %>
+                <option value="<%= actores[i].id %> ">
+                <%= actores[i].title %> 
+                </option>
+            <% } %>
+            
+        </select>
+    </div>
+    <button type="submit">Crear</button>
+</form>
+<%- include('footer') -%> 

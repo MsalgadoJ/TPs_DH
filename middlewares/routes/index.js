@@ -18,10 +18,12 @@ router.get('/admin',adminMiddleware.check, mainControllers.adminLogin);
 /*---PRUEBA SESSION---*/
 
 router.get('/prueba1', function(req, res){
-  if( typeof req.session.contador == 'undefined'){
+  var contador;
+  if( req.session.contador == undefined){
     req.session.contador = 0;
   }
-  var contador = req.session.contador;
+  contador = req.session.contador
+  console.log(contador + 'pagina uno')
   res.render('prueba1',{
     contador: contador
   });
@@ -29,8 +31,13 @@ router.get('/prueba1', function(req, res){
 
 
 router.post('/prueba1', function(req, res){
+    var contador = req.session.contador;
+    console.log(contador + 'viajando por post')
     contador++
-    res.render({contador:contador})
+    console.log(contador + ' ya pasé pot el contador')
+    res.render('prueba1',{
+      contador:contador
+    })
 })
 
 router.get('/prueba2', function(req, res){

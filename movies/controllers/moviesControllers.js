@@ -4,6 +4,7 @@ let {check, validationResult, body} = require('express-validator');
 
 const moviesControllers = {
 
+    // CREAR
     crear: function(req, res){
         db.Genero.findAll()
         .then(function(generos){
@@ -15,6 +16,7 @@ const moviesControllers = {
         
     },
 
+    // GUARDAR
     guardar: function(req,res){
 
         let errors = validationResult(req);
@@ -41,6 +43,7 @@ const moviesControllers = {
         }    
     },
 
+    // MOSTRAR LAS PELIS
     list: function (req, res, next){
         db.Pelicula.findAll()
             .then(function(peliculas){
@@ -51,12 +54,14 @@ const moviesControllers = {
             })
     },
 
+    // DETALLE
     detail: function(req,res,next){
         db.Pelicula.findByPk(req.params.id,{
             //Aquí utilizamos los nombres como los establecimos en las asociones hechas en el modelo
             include: [{association: "genero"}, {association: "actores"}]
         })
             .then(function(pelicula){
+
                 res.render('detail', {
                     pelicula:pelicula,
                     title: 'Detalle'
@@ -64,6 +69,7 @@ const moviesControllers = {
             })
     },
 
+    // EDITAR
     edit: function(req,res,next){
         let movieRequest = db.Pelicula.findByPk(req.params.id);
 
@@ -79,6 +85,7 @@ const moviesControllers = {
         })
     },
 
+    // ACTUALIZAR
     update: function(req,res,next){
         
         let errors = validationResult(req);
@@ -115,6 +122,7 @@ const moviesControllers = {
 
     },
 
+    // BORRAR
     delete: function(req, res){
         db.Pelicula.destroy({
             where: {
@@ -125,6 +133,7 @@ const moviesControllers = {
         res.redirect('/movies')
     },
 
+    // NUEVAS
     new: function(req,res,next){
         db.Pelicula.findAll({
             order: [
@@ -140,6 +149,7 @@ const moviesControllers = {
         })
     },
 
+    // RECOMENDADAS
     recom: function(req,res,next){
         db.Pelicula.findAll({
             where: {
@@ -158,12 +168,14 @@ const moviesControllers = {
         }) 
     },
 
+    // BUSCADOR
     search: function(req,res,next){
         res.render('search',{
             title: 'Búsqueda'
         })
     },
 
+    // RESULTADOS DE BÚSQUEDA
     results: function(req,res,next){
         let userSearch = req.query.search
         db.Pelicula.findAll({
@@ -181,7 +193,57 @@ const moviesControllers = {
                 title: 'Resultados'
             })
         }) 
+    },
+
+    // GENEROS
+    genre: function(req,res,next){
+        db.Genero.findByPk(req.params.id,{
+            //Aquí utilizamos los nombres como los establecimos en las asociones hechas en el modelo
+            include: [{association: "Peliculas"}]
+        })
+            .then(function(genero){
+                res.render('genre', {
+                    genero:genero,
+                    title: 'Genero'
+                })
+            })
+    },
+
+    // ACTORES
+    actor: function(req,res,next){
+        db.Actor.findByPk(req.params.id,{
+            //Aquí utilizamos los nombres como los establecimos en las asociones hechas en el modelo
+            include: [{association: "Peliculas"}]
+        })
+            .then(function(actor){
+
+                res.render('actor', {
+                    actor:actor,
+                    title: 'Actor'
+                })
+            })
+    },
+
+    // NUEVA ACTUACIÓN
+
+    newAct: function(req, res, next){
+        let allMovies = db.Pelicula.findAll();
+
+        let allActors = db.Actor.findAll();
+        console.log('AQUÍ ESTÁN LOS ACTORES')
+        console.log(allActors)
+
+        Promise.all([allMovies, allActors])
+            .then(function([peliculas, actores]){
+                res.render('newAct', {
+                    peliculas: peliculas,
+                    actores: actores
+                })
+            })
     }
+
+
+
 }
 
 module.exports = moviesControllers;

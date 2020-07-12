@@ -1,0 +1,14 @@
+<%- include('header') -%> 
+   
+  <h1><%= actor.first_name %> <%= actor.last_name %></h1>
+  <li>Peliculas relacionadas:
+    <ul>
+      <% for( let i = 0; i < actor.Peliculas.length; i++ ) { %>
+        <li>
+          <a href="/movies/detail/<%= actor.Peliculas[i].id %>"><%= actor.Peliculas[i].title %></a>
+        </li>
+      <% } %>
+    </ul>
+  </li>
+
+  <%- include('footer') -%>

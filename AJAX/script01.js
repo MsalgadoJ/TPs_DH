@@ -4,6 +4,8 @@ window.onload = function(){
 
     /* -- HACEMOS LA FUNCIÓN-- */
     function cambiarGif(){
+        let body = document.querySelector('body')
+        console.log(body)
         fetch('https://api.giphy.com/v1/gifs/random?api_key=XWzMnrjcqchXWM6XbtDcf3dANWmWf8TG&tag=&rating=G')
         .then(function(response){
             return response.json()
