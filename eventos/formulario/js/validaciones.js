@@ -1,5 +1,7 @@
 window.onload = function(){
 
+/* --- VALIDACIÓN IN TIME --- */
+
     /* VALIDACIÓN DE NOMBRE */
     var nombre = document.querySelector('input#fullName')
 
@@ -50,29 +52,27 @@ window.onload = function(){
         if(recontrasenia.value == ""){
             recontrasenia.classList.add("is-invalid")
             document.querySelector('.rePassword.invalid-feedback').innerHTML = 'Debes repetir la contraseña'
-        }
-        if(recontrasenia.value != contrasenia){
+        } else if(recontrasenia.value != contrasenia.value){
             recontrasenia.classList.add('is-invalid')
             document.querySelector('.rePassword.invalid-feedback').innerHTML = 'Debe ser igual a la anterior'
         }
     })
 
+/* --- VALIDACIÓN LUEGO DEL SUBMIT --- */
 
     let formulario = document.querySelector('form.contact-form');
 
     formulario.addEventListener('submit', function(e){
-        //aquí evitamos que se envíe para trabajar mas cómodos
-        e.preventDefault();
 
         let errores = [];
 
         if(nombre.value == ""){
             errores.push('El campo de nombre debe estar lleno')
         }
-        console.log(errores)
+
+        let fullName = nombre.value
         
         /* VALIDACIÓN DE E-MAIL */
-        
         
         //para validar un corrreo electrónico se hace con el siguiente patrón:
         let patron = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -82,12 +82,16 @@ window.onload = function(){
             errores.push('debe ser un correo electrónico')
         }
 
+        let eMail = email.value
+
         /* VALIDACIÓN DE TELÉFONO */
         let telefono = document.querySelector('input#phone')
 
         if(isNaN(telefono.value)){
             errores.push('El campo de teléfono no debe contener letras')
         }
+
+        let phone = telefono.value
 
         /* VALIDACIÓN DE CONTRASEÑA */
         let contrasenia = document.querySelector('input#password')
@@ -104,5 +108,30 @@ window.onload = function(){
         }
 
         console.log(errores)
+        //Verificamos los errores
+        if (errores.length > 0){
+            //si tenemos errores, evitamos que se envíe el formulario
+                e.preventDefault();
+    
+                let ulErrores = document.querySelector('div.errores ul')
+                //recorremos el array de errores
+                for (let i = 0; i < errores.length; i++) {
+                    
+                    ulErrores.innerHTML += '<li>'+ errores[i] + '</li>'
+                    
+                }
+        
+        // Si no hay errores
+        } else {
+            formulario.style.display = "none"
+            datos = document.querySelector('.registroCompleto ul')
+            datos.innerHTML += '<li>' + fullName + '</li>'
+            datos.innerHTML += '<li>' + eMail + '</li>'
+            datos.innerHTML += '<li>' + phone + '</li>'
+
+            nuevaPagina = document.querySelector('.registroCompleto')
+            nuevaPagina.innerHTML += '<h2> Gracias por registrarte :) </h2>'
+        }
+
     })
 }
