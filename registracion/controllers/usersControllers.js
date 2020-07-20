@@ -45,6 +45,13 @@ var usersControllers = {
             } else {
                 users = JSON.parse(usersFile);
             };
+
+            for( let i = 0; i< users.length; i++){
+                if(user.email == users[i].email){
+                    res.send('ya se ha registrado un usuario con este email')
+                    break;
+                }
+            } 
             
             
             users.push(user);
