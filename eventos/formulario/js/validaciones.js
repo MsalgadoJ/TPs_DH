@@ -120,18 +120,18 @@ window.onload = function(){
                     ulErrores.innerHTML += '<li>'+ errores[i] + '</li>'
                     
                 }
-        
+            }
         // Si no hay errores
-        } else {
+        
             formulario.style.display = "none"
             datos = document.querySelector('.registroCompleto ul')
             datos.innerHTML += '<li>' + fullName + '</li>'
             datos.innerHTML += '<li>' + eMail + '</li>'
             datos.innerHTML += '<li>' + phone + '</li>'
 
-            nuevaPagina = document.querySelector('.registroCompleto')
-            nuevaPagina.innerHTML += '<h2> Gracias por registrarte :) </h2>'
-        }
+            gracias = document.querySelector('.gracias')
+            gracias.innerHTML += '<h2> Gracias por registrarte :) </h2>'
+        
 
     })
 }
