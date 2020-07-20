@@ -6,9 +6,9 @@ var usersControllers = {
 
         register: function(req, res){
 
-            if(typeof req.cookies.bgColor != 'undefined'){
+            if(typeof req.session.color != 'undefined'){
                 res.render('register',{
-                    color: req.cookies.bgColor
+                    color: req.session.color
                 });
             } else {
                 res.render('register',{
@@ -151,24 +151,50 @@ var usersControllers = {
         },
 
         mostrarColores: function(req, res, next){
-            res.render('color')
+
+            if(typeof req.cookies.colorPreferido != 'undefined'){
+                res.render('color',{
+                    color: req.cookies.colorPreferido
+                });
+
+                } else if(typeof req.session.color != 'undefined'){
+                    res.render('color',{
+                        color: req.session.color
+                    });
+            } else {
+
+                res.render('color',{
+                    color: undefined
+                })
+            }
+
         },
 
         colorElegido: function(req, res, next){
             let color = req.body.color
-            console.log(color)
-            res.cookie('bgColor', color)
-            console.log('aquí debería estar la cookie')
-            console.log(req.cookies.bgColor)
+            //guardamos el color elegido en session
+            req.session.color = color
+            console.log('aquí debería estar el color')
+            console.log(req.session.color)
             if(req.body.colorPreferido != undefined){
-                res.cookie('colorPreferido', color)
+                res.cookie('colorPreferido', color, {maxAge: 2628000000000})
             }
 
-            console.log(req.cookies.colorPreferido+ ' aquí esta la coookieeeeeeee') 
+            
             res.render('nuevoColor', {
-                color: color,
+                color: req.session.color,
             })
+        },
+
+        olvidarColor: function(req, res){
+            var expiresDate = new Date(2019, 6, 9)
+            res.cookie('colorPreferido', {expires: expiresDate})
+            req.session.color = undefined
+
+            res.redirect('/users/color')
         }
+
+        
 };
 
 module.exports = usersControllers;

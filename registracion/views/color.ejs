@@ -3,6 +3,11 @@
   <head>
     <title>Color</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      body{
+          background-color:<%= color %>;
+      }
+  </style>
   </head>
   <body>
     <h1>Por favor, elige un color</h1>
@@ -18,5 +23,15 @@
       <br>
       <button type="submit">Enviar</button>
     </form>
+<br>
+<br>
+    <h4>Si ya seleccionaste un color y quieres volver al valor inicial, presiona acá</h4>
+    <form action="/users/color/olvidar" method="POST">
+      <input type="checkbox" name="olvidarColor">
+      <label for="">Olvidar color</label>
+      <br>
+      <button type="submit">Enviar</button>
+    </form>
+
   </body>
 </html>

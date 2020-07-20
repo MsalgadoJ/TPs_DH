@@ -51,4 +51,8 @@ router.get('/profile', credUserMiddlewares.auth, usersControllers.perfil);
   router.post('/color', usersControllers.colorElegido)
 
 
+  //OLVIDAR COLOR
+  router.post('/color/olvidar', usersControllers.olvidarColor)
+
+
 module.exports = router;
